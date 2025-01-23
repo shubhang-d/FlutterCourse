@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:form_app/views/home_view.dart';
+
+import 'home_view.dart';
 
 class FormView extends StatefulWidget {
   const FormView({super.key});
@@ -12,6 +12,10 @@ class FormView extends StatefulWidget {
 
 class _FormViewState extends State<FormView> {
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+  bool _isPasswordVisible = false;
+  bool _keepSigndIn = false;
+  String? _gender;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class _FormViewState extends State<FormView> {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  obscureText: true,
+                  obscureText: !_isPasswordVisible,
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter a value";
@@ -93,6 +97,18 @@ class _FormViewState extends State<FormView> {
                     ),
                     fillColor: Colors.grey[200],
                     filled: true,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -113,12 +129,119 @@ class _FormViewState extends State<FormView> {
                     filled: true,
                   ),
                 ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _keepSigndIn,
+                      onChanged: (value) {
+                        setState(() {
+                          _keepSigndIn = value!;
+                        });
+                      },
+                    ),
+                    // Radio(
+                    //   groupValue: _keepSigndIn,
+                    //   value: true,
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       _keepSigndIn = value!;
+                    //     });
+                    //   },
+                    // ),
+                    // Radio(
+                    //   groupValue: _keepSigndIn,
+                    //   value: false,
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       _keepSigndIn = value!;
+                    //     });
+                    //   },
+                    // ),
+                    TextButton(
+                      style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                      onPressed: () {
+                        setState(() {
+                          _keepSigndIn = !_keepSigndIn;
+                        });
+                      },
+                      child: Text("Keep me signed in"),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: "Male",
+                            groupValue: _gender,
+                            onChanged: (value) {
+                              setState(() {
+                                _gender = "Male";
+                              });
+                            },
+                          ),
+                          Text("Male"),
+                        ],
+                      ),
+                    ),
+                    // Spacer(),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                            value: "Female",
+                            groupValue: _gender,
+                            onChanged: (value) {
+                              setState(() {
+                                _gender = "Female";
+                              });
+                            },
+                          ),
+                          Text("Female"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 56),
                 FilledButton(
-                  onPressed: () {
+                  onPressed: () async {
                     primaryFocus?.unfocus();
 
-                    if (_formKey.currentState!.validate()) {
+                    if (_gender == null) {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(seconds: 8),
+                          backgroundColor: Colors.red,
+                          action: SnackBarAction(
+                            label: "OK",
+                            onPressed: () {
+                              print("Ok PRessed");
+
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                            },
+                          ),
+                          content: Text("Please select your gender"),
+                        ),
+                      );
+                    }
+
+                    if (_formKey.currentState!.validate() && _gender != null) {
+                      setState(() {
+                        _isLoading = true;
+                      });
+
+                      await Future.delayed(Duration(seconds: 2));
+
+                      setState(() {
+                        _isLoading = false;
+                      });
+
                       print("Form is valid");
 
                       Navigator.of(context).push(
@@ -130,7 +253,7 @@ class _FormViewState extends State<FormView> {
                       print("Form is invalid");
                     }
                   },
-                  child: Text("Press Me"),
+                  child: Text(_isLoading ? "Loading.." : "Press Me"),
                 ),
               ],
             ),

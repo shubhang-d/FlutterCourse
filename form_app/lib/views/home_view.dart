@@ -19,13 +19,92 @@ class _HomeViewState extends State<HomeView> {
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: Center(
-        child: Text(
-          "Home View",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Container(
+                    width: 80,
+                    color: Colors.yellow,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+            SizedBox(
+              height: 100,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+            SizedBox(
+              height: 100,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      color: Colors.yellow,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+            SizedBox(
+              height: 100,
+              child: Row(
+                children: [
+                  Spacer(flex: 3),
+                  Container(
+                    width: 100,
+                    color: Colors.blue,
+                  ),
+                  Spacer(),
+                  Container(
+                    width: 100,
+                    color: Colors.yellow,
+                  ),
+                  Spacer(
+                    flex: 3,
+                  ),
+                ],
+              ),
+            ),
+            // Spacer(),
+            Container(
+              height: 80,
+              color: Colors.red,
+            ),
+          ],
         ),
       ),
     );
