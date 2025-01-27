@@ -62,6 +62,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_iconly:
+    dependency: "direct main"
+    description:
+      name: flutter_iconly
+      sha256: fabcbd59d93666aed6b0f7b4285776686cf60d07447d4afbffee92635d5ed785
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -75,6 +83,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  iconsax:
+    dependency: "direct main"
+    description:
+      name: iconsax
+      sha256: fb0144c61f41f3f8a385fadc27783ea9f5359670be885ed7f35cef32565d5228
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
   leak_tracker:
     dependency: transitive
     description:

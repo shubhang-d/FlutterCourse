@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'home_view.dart';
 
@@ -104,9 +105,7 @@ class _FormViewState extends State<FormView> {
                         });
                       },
                       icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility,
+                        _isPasswordVisible ? Iconsax.eye_slash : Iconsax.eye,
                       ),
                     ),
                   ),
@@ -244,7 +243,7 @@ class _FormViewState extends State<FormView> {
 
                       print("Form is valid");
 
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (_) => HomeView(),
                         ),
