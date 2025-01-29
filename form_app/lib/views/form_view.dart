@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'home_view.dart';
@@ -39,10 +40,9 @@ class _FormViewState extends State<FormView> {
                 SizedBox(height: 48),
                 Text(
                   "Registration Form",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: GoogleFonts.lato(
+                    textStyle: Theme.of(context).textTheme.displayMedium.copyWith()
+                  )
                 ),
                 SizedBox(height: 64),
                 TextFormField(
