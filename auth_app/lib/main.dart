@@ -1,5 +1,7 @@
+import 'package:auth_app/screens/home.dart';
 import 'package:auth_app/screens/login.dart';
 import 'package:auth_app/screens/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -17,10 +19,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: SignupPage(),
-      ),
+    return MaterialApp(
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+         builder: (ctx, packet) {
+          if(packet.hasData){
+            return HomeScreen();
+          }
+          return LoginPage();
+         })
     );
   }
 }

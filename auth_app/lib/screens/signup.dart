@@ -36,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
               .push(MaterialPageRoute(builder: (ctx) => LoginPage()));
         }
       } on FirebaseAuthException catch (error) {
-        if (error.code == 'user-id-already-created') {
+        if (error.code == 'email-already-in-use') {
           print(error);
         }
         print(error);

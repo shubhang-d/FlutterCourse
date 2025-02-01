@@ -1,3 +1,4 @@
+import 'package:auth_app/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -20,15 +21,16 @@ class _LoginState extends State<LoginPage> {
     super.dispose();
   }
 
-  void createAccount() async {
+  void LoginAccount() async {
     if (email.text != null &&
         email.text.isNotEmpty &&
         pass.text != null &&
         pass.text.isNotEmpty &&
         pass.text.length >= 6) {
       try {
-        await _firebaseAuth.createUserWithEmailAndPassword(
+        final UserCredential = await _firebaseAuth.signInWithEmailAndPassword(
             email: email.text, password: pass.text);
+
       } on FirebaseAuthException catch (error) {
         if (error.code == 'user-id-already-created') {
           print(error);
@@ -112,7 +114,7 @@ class _LoginState extends State<LoginPage> {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            createAccount();
+                            LoginAccount();
                           },
                           child: Center(
                             child: Text(
@@ -126,6 +128,14 @@ class _LoginState extends State<LoginPage> {
                         ),
                       )),
                   SizedBox(height: 20.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (ctx) => SignupPage()),
+                      );
+                    },
+                    child: Text("Create an Account"),
+                  ),
                 ],
               )),
         ]));
