@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_app/todo/todo_provider.dart';
 import 'package:provider_app/utils.dart';
 
 class NewTodoScreen extends StatefulWidget {
@@ -11,12 +13,22 @@ class NewTodoScreen extends StatefulWidget {
 }
 
 class _NewTodoScreenState extends State<NewTodoScreen> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: MediaQuery.viewInsetsOf(context),
+    return ClipRRect(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(40),
+      ),
       child: FractionallySizedBox(
-        heightFactor: .4,
+        heightFactor: .8,
         child: Stack(
           children: [
             Positioned.fill(
@@ -27,22 +39,28 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
             ),
             Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                systemOverlayStyle: SystemUiOverlayStyle.dark,
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.close),
-                ),
-              ),
               body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
                     SizedBox(height: 30),
+                    // IconButton(
+                    //   onPressed: () {},
+                    //   icon: Row(
+                    //     children: [
+                    //       IconButton(
+                    //         onPressed: () {
+                    //           Navigator.pop(context);
+                    //         },
+                    //         icon: Icon(Icons.close),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    SizedBox(height: 30),
                     TextFormField(
+                      controller: _controller,
+                      autofocus: true,
                       decoration: InputDecoration(
                         hintText: "Task Name",
                         contentPadding: EdgeInsets.symmetric(
@@ -67,7 +85,13 @@ class _NewTodoScreenState extends State<NewTodoScreen> {
                             vertical: 24,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<TodoProvider>()
+                              .addTodo(_controller.text);
+
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           "Add",
                           style: TextStyle(

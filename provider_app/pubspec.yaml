@@ -10,8 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_iconly: ^1.0.2
+  flutter_svg: ^2.0.17
   google_fonts: ^6.2.1
   iconsax: ^0.0.8
+  intl: ^0.20.2
   provider: ^6.1.2
   shared_preferences: ^2.5.1
 
